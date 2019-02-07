@@ -72,23 +72,27 @@ unmount_image(){
 export -f unmount_image
 
 on_chroot() {
+	if [[ -z "${ROOTFS_DIR}" && -d "${1:-.}/rootfs" ]]; then
+		ROOTFS_DIR="${1:-.}/rootfs"
+		[[ -n "${1}" ]] && shift
+	fi
+	if [[ ! -d "${ROOTFS_DIR}" ]]; then 
+		echo "Cannot chroot to '${ROOTFS_DIR}, it is not a directory.'" 1>&2
+		return -1
+	fi
 	if ! mount | grep -q "$(realpath "${ROOTFS_DIR}"/proc)"; then
 		mount -t proc proc "${ROOTFS_DIR}/proc"
 	fi
+	for DIR in dev dev/pts sys; do 
+		if ! mount | grep -q "$(realpath "${ROOTFS_DIR}/${DIR}")"; then
+			mount --bind /${DIR} "${ROOTFS_DIR}/{DIR}"
+		fi
+	done
 
-	if ! mount | grep -q "$(realpath "${ROOTFS_DIR}"/dev)"; then
-		mount --bind /dev "${ROOTFS_DIR}/dev"
-	fi
-	
-	if ! mount | grep -q "$(realpath "${ROOTFS_DIR}"/dev/pts)"; then
-		mount --bind /dev/pts "${ROOTFS_DIR}/dev/pts"
-	fi
+	local BASEDIR="$(dirname "${ROOTFS_DIR}")"
+	local CHROOT_NAME="${IMG_NAME:-pi-gen}:${STAGE:-${BASEDIR##*/}}"
 
-	if ! mount | grep -q "$(realpath "${ROOTFS_DIR}"/sys)"; then
-		mount --bind /sys "${ROOTFS_DIR}/sys"
-	fi
-
-	capsh --drop=cap_setfcap "--chroot=${ROOTFS_DIR}/" -- -e "$@"
+	debian_chroot="${CHROOT_NAME}" capsh --drop=cap_setfcap "--chroot=${ROOTFS_DIR}/" -- -e "$@"
 }
 export -f on_chroot
 
