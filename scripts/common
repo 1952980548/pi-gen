@@ -87,8 +87,9 @@ on_chroot() {
 	if ! mount | grep -q "$(realpath "${ROOTFS_DIR}"/sys)"; then
 		mount --bind /sys "${ROOTFS_DIR}/sys"
 	fi
+	local name="${IMG_NAME:-pi-gen}->${STAGE:-$(basename "${ROOTFS_DIR//\/rootfs\/}")}"
 
-	capsh --drop=cap_setfcap "--chroot=${ROOTFS_DIR}/" -- -e "$@"
+	debian_chroot="${name}" capsh --drop=cap_setfcap "--chroot=${ROOTFS_DIR}/" -- -e "$@"
 }
 export -f on_chroot
 
