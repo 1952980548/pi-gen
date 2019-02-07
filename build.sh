@@ -144,6 +144,7 @@ fi
 
 export USE_QEMU="${USE_QEMU:-0}"
 export IMG_DATE="${IMG_DATE:-"$(date +%Y-%m-%d)"}"
+export DEBIAN_VERSION=${DEBIAN_VERSION:-stretch}
 export IMG_FILENAME="${IMG_FILENAME:-"${IMG_DATE}-${IMG_NAME}"}"
 export ZIP_FILENAME="${ZIP_FILENAME:-"image_${IMG_DATE}-${IMG_NAME}"}"
 

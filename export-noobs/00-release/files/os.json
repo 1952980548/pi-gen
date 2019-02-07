@@ -15,5 +15,5 @@
     ],
     "url": "http://www.raspbian.org/",
     "username": "FIRST_USER_NAME",
-    "version": "stretch"
+    "version": "DEBIAN_VERSION"
 }

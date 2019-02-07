@@ -47,6 +47,12 @@ The following environment variables are supported:
        docker-compose up -d
        echo 'APT_PROXY=http://172.17.0.1:3142' >> config
 
+ * `DEBIAN_VERSION`  (Default: `stretch`)
+
+   Targeted Debian version for the image (e.g. `jessie`, `stretch`, `buster`)
+
+   **CAUTION**: Currently, only `stretch` is supported since `jessie` is EOL and not all packages are available for `buster` yet.
+
  * `BASE_DIR`  (Default: location of `build.sh`)
 
    **CAUTION**: Currently, changing this value will probably break build.sh
