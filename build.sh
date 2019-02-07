@@ -156,6 +156,7 @@ export LOG_FILE="${WORK_DIR}/build.log"
 
 export FIRST_USER_NAME=${FIRST_USER_NAME:-pi}
 export FIRST_USER_PASS=${FIRST_USER_PASS:-raspberry}
+export TIMEZONE=${TIMEZONE:-Europe/London}
 export WPA_ESSID
 export WPA_PASSWORD
 export WPA_COUNTRY
