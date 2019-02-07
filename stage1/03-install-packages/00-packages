@@ -1,1 +1,3 @@
-libraspberrypi-bin libraspberrypi0 raspi-config
+libraspberrypi-bin             # Miscellaneous Raspberry Pi utilities
+libraspberrypi0                # EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV
+raspi-config                   # Raspberry Pi configuration tool

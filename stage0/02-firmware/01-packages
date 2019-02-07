@@ -1,2 +1,2 @@
-raspberrypi-bootloader
-raspberrypi-kernel
+raspberrypi-bootloader         # Raspberry Pi bootloader
+raspberrypi-kernel             # Raspberry Pi bootloader

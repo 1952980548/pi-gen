@@ -1,4 +1,4 @@
-hunspell-en-gb
-hyphen-en-gb
-wamerican
-wbritish
+hunspell-en-gb                 # English (GB) dictionary for hunspell
+hyphen-en-gb                   # English (GB) hyphenation patterns
+wamerican                      # American English dictionary words for /usr/share/dict
+wbritish                       # British English dictionary words for /usr/share/dict

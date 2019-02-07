@@ -1,27 +1,56 @@
-java-common oracle-java8-jdk
-python idle python3-pygame python-pygame python-tk
-python3 idle3 python3-tk
-python3-pgzero
-python-serial python3-serial
-python-picamera python3-picamera
-debian-reference-en dillo
-raspberrypi-net-mods raspberrypi-ui-mods
-python-pip python3-pip
-python3-numpy
-pypy
-alacarte rc-gui sense-hat
-tree
-libgl1-mesa-dri libgles1-mesa libgles2-mesa xcompmgr
-geany
-piclone
-wiringpi pigpio python-pigpio python3-pigpio raspi-gpio python-gpiozero python3-gpiozero python3-rpi.gpio
-python-spidev python3-spidev
-python-twython python3-twython
-python-smbus python3-smbus
-python-flask python3-flask
-python-picraft python3-picraft
-pprompt
-piwiz
-rp-prefapps
-libav-tools
-vlc
+java-common                    # Base package for Java runtimes
+oracle-java8-jdk               # Java?? Platform, Standard Edition 8 Development Kit
+python                         # interactive high-level object-oriented language (default version)
+idle                           # IDE for Python using Tkinter (default version)
+python3-pygame                 # SDL bindings for games development (Python 3)
+python-pygame                  # SDL bindings for games development (Python 2)
+python-tk                      # Tkinter - Writing Tk applications with Python
+python3                        # interactive high-level object-oriented language (default python3 version)
+idle3                          # IDE for Python using Tkinter (default version)
+python3-tk                     # Tkinter - Writing Tk applications with Python 3.x
+python3-pgzero                 # Zero-boilerplate games programming framework based on Pygame (Python 3)
+python-serial                  # pyserial - module encapsulating access for the serial port
+python3-serial                 # pyserial - module encapsulating access for the serial port
+python-picamera                # Pure Python interface to the Raspberry Pi's camera module.
+python3-picamera               # Pure Python interface to the Raspberry Pi's camera module.
+debian-reference-en            # Debian system administration guide, English original
+dillo                          # Small and fast web browser
+raspberrypi-net-mods           # Network configuration for the Raspberry Pi UI
+raspberrypi-ui-mods            # Config to customise the LXDE UI for the Raspberry Pi
+python-pip                     # Python package installer
+python3-pip                    # Python package installer
+python3-numpy                  # Fast array facility to the Python 3 language
+pypy                           # fast alternative implementation of Python - PyPy interpreter
+alacarte                       # easy GNOME menu editing tool
+rc-gui                         # raspi-config GUI
+sense-hat                      # Sense HAT configuration, libraries and examples
+tree                           # displays an indented directory tree, in color
+libgl1-mesa-dri                # free implementation of the OpenGL API -- DRI modules
+libgles1-mesa                  # free implementation of the OpenGL|ES 1.x API -- runtime
+libgles2-mesa                  # free implementation of the OpenGL|ES 2.x API -- runtime
+xcompmgr                       # X composition manager
+geany                          # fast and lightweight IDE
+piclone                        # SD Card backup program for Raspberry Pi
+wiringpi                       # Raspberry Pi GPIO libraries, headers and gpio command
+pigpio                         # Library for Raspberry Pi GPIO control
+python-pigpio                  # Python module which talks to the pigpio daemon (Python 2)
+python3-pigpio                 # Python module which talks to the pigpio daemon (Python 3)
+raspi-gpio                     # Dump the state of the BCM270x GPIOs
+python-gpiozero                # Simple API for controlling devices attached to a Pi's GPIO pins.
+python3-gpiozero               # Simple API for controlling devices attached to a Pi's GPIO pins.
+python3-rpi.gpio               # Python 3 GPIO module for Raspberry Pi
+python-spidev                  # Bindings for Linux SPI access through spidev (Python 2)
+python3-spidev                 # Bindings for Linux SPI access through spidev (Python 3)
+python-twython                 # Pure Python wrapper for the Twitter API
+python3-twython                # Pure Python3 wrapper for the Twitter API
+python-smbus                   # Python bindings for Linux SMBus access through i2c-dev
+python3-smbus                  # Python 3 bindings for Linux SMBus access through i2c-dev
+python-flask                   # micro web framework based on Werkzeug and Jinja2 - Python 2.7
+python3-flask                  # micro web framework based on Werkzeug and Jinja2 - Python 3.x
+python-picraft                 # Alternative API for controlling Minecraft from Python.
+python3-picraft                # Alternative API for controlling Minecraft from Python.
+pprompt                        # ssh password check
+piwiz                          # Raspberry Pi first-run wizard
+rp-prefapps                    # Raspberry Pi recommended applications
+libav-tools                    # Compatibility links for libav-tools (transitional package)
+vlc                            # multimedia player and streamer
