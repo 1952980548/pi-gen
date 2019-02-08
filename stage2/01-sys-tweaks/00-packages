@@ -1,14 +1,14 @@
+openssh-client                 # secure shell (SSH) client, for secure access to remote machines
+openssh-server                 # secure shell (SSH) server, for secure access from remote machines
 ssh                            # secure shell client and server (metapackage)
+ssh-import-id                  # securely retrieve an SSH public key and install it locally
 less                           # pager program similar to more
 fbset                          # framebuffer device maintenance program
-sudo                           # Provide limited super user privileges to specific users
 psmisc                         # utilities that use the proc file system
 strace                         # System call tracer
 ed                             # classic UNIX line editor
 ncdu                           # ncurses disk usage viewer
 crda                           # wireless Central Regulatory Domain Agent
-console-setup                  # console font and keymap setup program
-keyboard-configuration         # system-wide keyboard preferences
 debconf-utils                  # debconf utilities
 parted                         # disk partition manipulator
 unzip                          # De-archiver for .zip files
@@ -20,21 +20,14 @@ gdb                            # GNU Debugger
 pkg-config                     # manage compile and link flags for libraries
 python-rpi.gpio                # Python GPIO module for Raspberry Pi
 v4l-utils                      # Collection of command line video4linux utilities
-avahi-daemon                   # Avahi mDNS/DNS-SD daemon
 lua5.1                         # Simple, extensible, embeddable programming language
 luajit                         # Just in time compiler for Lua programming language version 5.1
-hardlink                       # Hardlinks multiple copies of the same file
 ca-certificates                # Common CA certificates
 curl                           # command line tool for transferring data with URL syntax
-fake-hwclock                   # Save/restore system clock on machines without working RTC hardware
 nfs-common                     # NFS support files common to client and server
 usbutils                       # Linux USB utilities
-libraspberrypi-dev             # EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
-libraspberrypi-doc             # EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
 libfreetype6-dev               # FreeType 2 font engine, development files
 dosfstools                     # utilities for making and checking MS-DOS FAT filesystems
-dphys-swapfile                 # Autogenerate and use a swap file
-raspberrypi-sys-mods           # System tweaks for the Raspberry Pi
 pi-bluetooth                   # Raspberry Pi 3 bluetooth
 apt-listchanges                # package change history notification tool
 usb-modeswitch                 # mode switching tool for controlling "flip flop" USB devices
@@ -46,4 +39,3 @@ rsync                          # fast, versatile, remote (and local) file-copyin
 htop                           # interactive processes viewer
 man-db                         # on-line manual pager
 policykit-1                    # framework for managing administrative policies and privileges
-ssh-import-id                  # securely retrieve an SSH public key and install it locally

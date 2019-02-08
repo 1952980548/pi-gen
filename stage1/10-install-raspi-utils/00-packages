@@ -1,0 +1,5 @@
+raspi-copies-and-fills         # ARM-accelerated versions of selected functions from string.h
+libraspberrypi-dev             # EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
+libraspberrypi-doc             # EGL/GLES/OpenVG/etc. libraries for the Raspberry Pi's VideoCore IV (headers)
+raspberrypi-sys-mods           # System tweaks for the Raspberry Pi
+rpi-update                     # Raspberry Pi firmware updating tool

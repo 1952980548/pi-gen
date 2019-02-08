@@ -9,8 +9,12 @@ rm -f "${IMG_FILE}"
 rm -rf "${ROOTFS_DIR}"
 mkdir -p "${ROOTFS_DIR}"
 
-BOOT_SIZE=$(du --apparent-size -s "${EXPORT_ROOTFS_DIR}/boot" --block-size=1 | cut -f 1)
-TOTAL_SIZE=$(du --apparent-size -s "${EXPORT_ROOTFS_DIR}" --exclude var/cache/apt/archives --block-size=1 | cut -f 1)
+echo "EXPORT_ROOTFS_DIR=${EXPORT_ROOTFS_DIR}"
+du  -s "${EXPORT_ROOTFS_DIR}/boot" --block-size=1k
+du  -s "${EXPORT_ROOTFS_DIR}/" --block-size=1k
+
+BOOT_SIZE=$(du  -s "${EXPORT_ROOTFS_DIR}/boot" --block-size=1 | cut -f 1)
+TOTAL_SIZE=$(du  -s "${EXPORT_ROOTFS_DIR}/" --exclude var/cache/apt/archives --block-size=1 | cut -f 1)
 
 ROUND_SIZE="$((4 * 1024 * 1024))"
 ROUNDED_ROOT_SECTOR=$(((2 * BOOT_SIZE + ROUND_SIZE) / ROUND_SIZE * ROUND_SIZE / 512 + 8192))

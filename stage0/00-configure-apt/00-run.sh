@@ -9,7 +9,7 @@ if [ -n "$APT_PROXY" ]; then
 else
 	rm -f "${ROOTFS_DIR}/etc/apt/apt.conf.d/51cache"
 fi
-
+install -m 644 files/50raspi            "${ROOTFS_DIR}/etc/apt/apt.conf.d/"
 on_chroot apt-key add - < files/raspberrypi.gpg.key
 on_chroot << EOF
 apt-get update

@@ -1,0 +1,3 @@
+netbase                        # Basic TCP/IP networking system
+fake-hwclock                   # Save/restore system clock on machines without working RTC hardware
+hardlink                       # Hardlinks multiple copies of the same file

@@ -85,7 +85,7 @@ on_chroot() {
 	fi
 	for DIR in dev dev/pts sys; do 
 		if ! mount | grep -q "$(realpath "${ROOTFS_DIR}/${DIR}")"; then
-			mount --bind /${DIR} "${ROOTFS_DIR}/{DIR}"
+			mount --bind /${DIR} "${ROOTFS_DIR}/${DIR}"
 		fi
 	done
 

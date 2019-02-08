@@ -146,7 +146,7 @@ export USE_QEMU="${USE_QEMU:-0}"
 export IMG_DATE="${IMG_DATE:-"$(date +%Y-%m-%d)"}"
 export DEBIAN_VERSION=${DEBIAN_VERSION:-stretch}
 export IMG_FILENAME="${IMG_FILENAME:-"${IMG_DATE}-${IMG_NAME}"}"
-export ZIP_FILENAME="${ZIP_FILENAME:-"image_${IMG_DATE}-${IMG_NAME}"}"
+export ZIP_FILENAME="${ZIP_FILENAME:-"${IMG_FILENAME}"}"
 
 export BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export SCRIPT_DIR="${BASE_DIR}/scripts"
@@ -215,7 +215,8 @@ for EXPORT_DIR in ${EXPORT_DIRS}; do
 	STAGE_DIR=${BASE_DIR}/export-image
 	# shellcheck source=/dev/null
 	source "${EXPORT_DIR}/EXPORT_IMAGE"
-	EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
+	export EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
+	echo "Export dir: ${EXPORT_ROOTFS_DIR}"
 	run_stage
 	if [ "${USE_QEMU}" != "1" ]; then
 		if [ -e "${EXPORT_DIR}/EXPORT_NOOBS" ]; then
