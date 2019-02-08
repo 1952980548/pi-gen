@@ -148,13 +148,14 @@ export DEBIAN_VERSION=${DEBIAN_VERSION:-stretch}
 export IMG_FILENAME="${IMG_FILENAME:-"${IMG_DATE}-${IMG_NAME}"}"
 export ZIP_FILENAME="${ZIP_FILENAME:-"image_${IMG_DATE}-${IMG_NAME}"}"
 
-BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export SCRIPT_DIR="${BASE_DIR}/scripts"
 export WORK_DIR="${WORK_DIR:-"${BASE_DIR}/work/${IMG_DATE}-${IMG_NAME}"}"
 export DEPLOY_DIR=${DEPLOY_DIR:-"${BASE_DIR}/deploy"}
 export DEPLOY_ZIP="${DEPLOY_ZIP:-1}"
 export LOG_FILE="${WORK_DIR}/build.log"
 
+export RPI_HOSTNAME=${RPI_HOSTNAME:-raspberrypi}
 export FIRST_USER_NAME=${FIRST_USER_NAME:-pi}
 export FIRST_USER_PASS=${FIRST_USER_PASS:-raspberry}
 export TIMEZONE=${TIMEZONE:-Europe/London}
@@ -163,7 +164,6 @@ export WPA_PASSWORD
 export WPA_COUNTRY
 export ENABLE_SSH="${ENABLE_SSH:-0}"
 
-export BASE_DIR
 
 export CLEAN
 export IMG_NAME
