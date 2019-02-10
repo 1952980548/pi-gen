@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+is_sourced(){ [[ "$0" != "$BASH_SOURCE" ]]; }
+msg(){ echo -e "$@" 1>&2; }
+err(){ msg $'\033[00;31m'"ERROR: $@"$'\033[00m'; }
+die(){ err "$@"; is_sourced || exit 1 && false; }
+
+
+set_keyboard(){
+    local kb="${1:?}";
+    sudo sed -ri "/XKBLAYOUT/ s/=.*$/=\"$kb\"/" /etc/default/keyboard;
+    sudo setupcon -v
+}
+declare -fx set_keyboard
+
+nopasswd_sudo(){
+    local user="${1:-$SUDO_USER}"
+    [[ -n "$user" ]] || { die "Usage: $0 USERNAME" || return 1; } 
+    id "$user" &>/dev/null || { die "User '$user' does not exist!" || return 1; }
+    msg "Adding NOPASSWD:ALL for user '$user' to sudoers file"
+    echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/010_$user-nopasswd 
+}
+declare -fx nopasswd_sudo
+
+set_hostname(){
+    local newname="$1"
+    local oldname="$(hostname)"
+    [[ -n "$newname" ]] || die "No hostname specified" || return -1
+    echo "Changing hostname from '$oldname' to '$newname'"
+    sudo hostname "$1" && { 
+        hostname | sudo tee /etc/hostname >/dev/null
+        sudo sed -i "s/$oldname/$newname/g" /etc/hosts
+        [[ -f /var/lib/cloud/seed/nocloud-net/user-data ]] && 
+            sudo sed -ri "s/(hostname: ).*\$/\1$newname/" \
+                /var/lib/cloud/seed/nocloud-net/user-data
+        exec $SHELL
+    }
+}
+declare -fx set_hostname
+
+set_prompt_colors(){
+    sed -ri 's/^#?(force_color_prompt=).*/\1yes/g' $target{/etc/skel,/root,/home/*}/.bashrc &> /dev/null
+    [[ ! -f  $target/root/.bashrc ]] && cp $target{/etc/skel/.bashrc,/root/}
+    sed -i "s/PS1='/PS1='\\\[\\\033[01;33m\\\]/g; s/01;32m/01;31m/g" $target/root/.bashrc
+}
+
+set_timezone(){
+    local tz="${1:-Europe/Brussels}"
+    sudo timedatectl set-timezone "$tz"
+}
+declare -fx set_timezone
+
+add_default_groups(){
+    local user="$1"
+    sudo usermod -aG adm,dialout,cdrom,audio,users,sudo,video,games,plugdev,input,gpio,spi,i2c,netdev "$user"
+}
+declare -fx add_default_groups
+
+add_user(){
+    local user="${1}"
+    [[ -n "$user" ]] || { die "Usage: $0 USERNAME" || return 1; } 
+    id "$user" &>/dev/null && { die "User '$user' exists!" || return 1; }
+    sudo adduser "$user" --gecos="" --disabled-passwd 
+    add_default_groups "$user"
+    nopasswd_sudo "$user"
+    sudo passwd "$user"
+}
+declare -fx add_user
+
+mkvenv(){
+    local opts="" dir="$PWD"
+    while [[ -n "$1" ]]; do
+        case "$1" in
+            -s) opts+="--system-site-packages" ;;
+            -d) dir="$2"; shift ;;
+            *) local name="$1" ;;
+        esac
+        shift
+    done
+    msg "Creating new environment '${name:=venv}' in ${dir}..."
+    pushd "$dir" >/dev/null
+    python3 -m venv "$env" 
+    "$env/bin/python3" -m pip install --upgrade pip setuptools wheel 
+    source "$env/bin/activate"
+    popd >/dev/null
+}
+declare -fx mkvenv
+
+usage(){
+    echo TBA
+}
+
+is_sourced || {
+    op="$1"; shift
+    case "$op" in 
+        add-user) add_user "$@";;
+        groups) add_default_groups "$@";;
+        sudo) nopasswd_sudo "$@";;
+        keyb|keyboard) set_keyboard "$@";;
+        venv|virtualenv) mkvenv "$@";;
+        hostname) set_hostname "$@";;
+        tmz|timezone) set_timezone "$@";;
+        *) usage;;
+    esac
+}
+
