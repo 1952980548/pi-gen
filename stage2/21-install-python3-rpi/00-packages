@@ -1,0 +1,9 @@
+python3-pigpio                 # Python module which talks to the pigpio daemon (Python 3)
+python3-gpiozero               # Simple API for controlling devices attached to a Pi's GPIO pins.
+python3-rpi.gpio               # Python 3 GPIO module for Raspberry Pi
+python3-picamera               # Pure Python interface to the Raspberry Pi's camera module.
+python3-smbus                  # Python 3 bindings for Linux SMBus access through i2c-dev
+python3-spidev                 # Bindings for Linux SPI access through spidev (Python 3)
+python3-serial                 # pyserial - module encapsulating access for the serial port
+python3-sense-hat              # Sense HAT python library (Python 3)
+python3-rtimulib               # Versatile C++ and Python 9-dof, 10-dof and 11-dof IMU library (Python 3)

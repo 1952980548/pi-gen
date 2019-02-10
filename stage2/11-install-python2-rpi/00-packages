@@ -1,0 +1,9 @@
+python-pigpio                  # Python module which talks to the pigpio daemon (Python 2)
+python-gpiozero                # Simple API for controlling devices attached to a Pi's GPIO pins.
+python-rpi.gpio                # Python GPIO module for Raspberry Pi
+python-picamera                # Pure Python interface to the Raspberry Pi's camera module.
+python-smbus                   # Python bindings for Linux SMBus access through i2c-dev
+python-spidev                  # Bindings for Linux SPI access through spidev (Python 2)
+python-serial                  # pyserial - module encapsulating access for the serial port
+python-sense-hat               # Sense HAT python library (Python 2)
+python-rtimulib                # Versatile C++ and Python 9-dof, 10-dof and 11-dof IMU library (Python 2)

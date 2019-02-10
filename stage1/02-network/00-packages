@@ -1,4 +1,5 @@
-raspberrypi-net-mods           # Network configuration for the Raspberry Pi UI
-dhcpcd5                        # DHCPv4, IPv6RA and DHCPv6 client with IPv4LL support
+netbase                        # Basic TCP/IP networking system
 net-tools                      # NET-3 networking toolkit
+dhcpcd5                        # DHCPv4, IPv6RA and DHCPv6 client with IPv4LL support
 avahi-daemon                   # Avahi mDNS/DNS-SD daemon
+raspberrypi-net-mods           # Network configuration for the Raspberry Pi UI

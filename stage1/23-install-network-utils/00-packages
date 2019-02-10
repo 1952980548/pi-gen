@@ -1,0 +1,5 @@
+## network utils
+tcpdump                        # command-line network traffic analyzer 
+nmap                           # The Network Mapper
+dnsutils                       # Clients provided with BIND
+

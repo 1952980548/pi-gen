@@ -1,0 +1,8 @@
+raspberrypi-ui-mods            # Config to customise the LXDE UI for the Raspberry Pi 
+raspberrypi-artwork            # Copy of the Raspberry Pi logo                        
+rc-gui                         # raspi-config GUI                                     
+piclone                        # SD Card backup program for Raspberry Pi 
+pprompt                        # ssh password check                   
+piwiz                          # Raspberry Pi first-run wizard        
+rp-prefapps                    # Raspberry Pi recommended applications
+

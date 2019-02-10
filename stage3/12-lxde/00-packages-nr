@@ -1,0 +1,3 @@
+lxde                           # Metapackage for LXDE                                  
+lxtask                         # LXDE task manager                                     
+lightdm                        # simple display manager

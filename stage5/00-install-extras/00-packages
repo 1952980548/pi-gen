@@ -1,4 +1,5 @@
-python3-thonny                 # Python IDE for beginners
+## commnt==moved to earlier stage
+#python3-thonny                 # Python IDE for beginners
 sonic-pi                       # Sonic Pi - The Live Coding Music Synth for Everyone.
 scratch                        # easy to use programming environment for ages 8 and up
 nuscratch                      # Scratch running on the Stack (Cog) VM
@@ -6,13 +7,13 @@ scratch2                       # Electron build of Scratch 2 offline
 smartsim                       # Digital logic circuit design and simulation package.
 minecraft-pi                   # Minecraft for the Raspberry Pi
 python-minecraftpi             # Python API for Minecraft Pi
-python-sense-emu               # Client library for the Raspberry Pi Sense HAT emulator.
-sense-emu-tools                # Emulator for the Raspberry Pi Sense HAT.
-python-sense-emu-doc           # Documentation for the Raspberry Pi Sense HAT emulator.
+#python-sense-emu               # Client library for the Raspberry Pi Sense HAT emulator.
+#sense-emu-tools                # Emulator for the Raspberry Pi Sense HAT.
+#python-sense-emu-doc           # Documentation for the Raspberry Pi Sense HAT emulator.
 wolfram-engine                 # Mathematica? and the Wolfram Language
 claws-mail                     # Fast, lightweight and user-friendly GTK+2 based email client
 greenfoot                      # A simple but powerful Java IDE.
 bluej                          # A simple but powerful Java IDE.
 nodered                        # Node-RED flow editor for the Internet of Things
-realvnc-vnc-viewer             # VNC? Viewer
+#realvnc-vnc-viewer             # VNC? Viewer
 python-games                   # Example games written in Python

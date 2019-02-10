@@ -1,0 +1,11 @@
+alsa-utils                     # Utilities for configuring and using ALSA
+v4l-utils                      # Collection of command line video4linux utilities
+gstreamer1.0-x                 # GStreamer plugins for X11 and Pango         
+gstreamer1.0-omx               # GStreamer OpenMAX plugins                   
+gstreamer1.0-plugins-base      # GStreamer plugins from the "base" set       
+gstreamer1.0-plugins-good      # GStreamer plugins from the "good" set       
+gstreamer1.0-plugins-bad       # GStreamer plugins from the "bad" set        
+gstreamer1.0-alsa              # GStreamer plugin for ALSA                   
+gstreamer1.0-libav             # libav plugin for GStreamer                  
+omxplayer                      # Command line media player for Raspberry Pi 
+libav-tools                    # Compatibility links for libav-tools (transitional package) 

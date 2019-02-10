@@ -4,6 +4,7 @@ realpath:coreutils
 qemu-arm-static:qemu-user-static
 debootstrap
 zerofree
+hardlink
 pxz zip
 mkdosfs:dosfstools
 capsh:libcap2-bin

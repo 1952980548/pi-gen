@@ -1,0 +1,4 @@
+desktop-base                   # common files for the Debian Desktop
+obconf                         # preferences manager for Openbox window manager
+gtk2-engines                   # theme engines for GTK+ 2.x
+xcompmgr                       # X composition manager

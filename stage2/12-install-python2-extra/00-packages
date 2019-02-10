@@ -1,0 +1,3 @@
+python-numpy                   # Numerical Python adds a fast array facility to the Python language
+python-matplotlib              # Python based plotting system in a style similar to Matlab
+python-flask                   # micro web framework based on Werkzeug and Jinja2 - Python 2.7

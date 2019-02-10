@@ -1,0 +1,3 @@
+ntpdate                        # client for setting system time from NTP servers
+fake-hwclock                   # Save/restore system clock on machines without working RTC hardware
+

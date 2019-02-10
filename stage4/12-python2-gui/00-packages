@@ -1,0 +1,5 @@
+python                         # interactive high-level object-oriented language (default version) 
+idle                           # IDE for Python using Tkinter (default version)
+python-pygame                  # SDL bindings for games development (Python 2)
+python-tk                      # Tkinter - Writing Tk applications with Python
+

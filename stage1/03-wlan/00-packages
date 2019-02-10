@@ -1,7 +1,10 @@
-wpasupplicant                  # client support for WPA and WPA2 (IEEE 802.11i)
-wireless-tools                 # Tools for manipulating Linux Wireless Extensions
 firmware-atheros               # Binary firmware for Atheros wireless cards
 firmware-brcm80211             # Binary firmware for Broadcom 802.11 wireless cards
 firmware-libertas              # Binary firmware for Marvell wireless cards
 firmware-misc-nonfree          # Binary firmware for various drivers in the Linux kernel
 firmware-realtek               # Binary firmware for Realtek wired/wifi/BT adapters
+wpasupplicant                  # client support for WPA and WPA2 (IEEE 802.11i)
+wireless-tools                 # Tools for manipulating Linux Wireless Extensions
+crda                           # wireless Central Regulatory Domain Agent
+rfkill                         # tool for enabling and disabling wireless devices
+

@@ -1,0 +1,22 @@
+python-automationhat           # Python library for the Pimoroni Automation HAT
+python-blinkt                  # Python library for the Pimoroni Blinkt!
+python-cap1xxx                 # python library designed to drive various Microchip CAP1xxx touch ICs.
+python-drumhat                 # Python library for the Pimoroni Drum HAT.
+python-envirophat              # Python library for the Pimoroni Enviro pHAT.
+python-explorerhat             # python library designed to control the Explorer HAT and pHAT.
+python-fourletterphat          # Python library for the Pimoroni Four Letter pHAT
+python-microdotphat            # Python library for the Pimoroni Micro Dot pHAT.
+python-mote                    # python library designed to control Mote.
+python-motephat                # python library designed to control Mote pHAT
+python-phatbeat                # Python library for the Pimoroni pHAT BEAT.
+python-pianohat                # Python library for the Pimoroni Piano HAT.
+python-piglow                  # python library designed to drive Piglow.
+python-rainbowhat              # Python library for the Pimoroni Rainbow HAT
+python-scrollphat              # python library designed to control Scroll pHAT.
+python-scrollphathd            # Python library for the Pimoroni Scroll pHAT HD.
+python-sn3218                  # python library to help control the SN3218 18-channel PWM LED driver.
+python-skywriter               # python library designed to control Skywriter.
+python-touchphat               # python library designed to control Touch pHAT
+python-buttonshim              # Python library for the Pimoroni Button SHIM
+python-unicornhathd            # Python library for the Pimoroni Unicorn HAT HD.
+python-pantilthat              # Python library for the Pimoroni Pan-Tilt HAT

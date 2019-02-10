@@ -1,0 +1,7 @@
+xserver-xorg-video-fbdev       # X.Org X server -- fbdev display driver
+xserver-xorg                   # X.Org X server
+xinit                          # X server initialisation tool
+xserver-xorg-video-fbturbo     # X.Org X server -- fbturbo display driver
+menu-xdg                       # freedesktop.org menu compliant window manager scripts
+xdg-utils                      # desktop integration utilities from freedesktop.org
+gksu                           # graphical front-end to su and sudo

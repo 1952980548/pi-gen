@@ -1,0 +1,6 @@
+## python2.7 base
+python                         # interactive high-level object-oriented language (default version)
+python-pip                     # Python package installer
+python-wheel                   # built-package format for Python
+python-setuptools              # Python Distutils Enhancements
+python-virtualenv              # Python virtual environment creator

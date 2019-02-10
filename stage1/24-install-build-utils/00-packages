@@ -1,0 +1,12 @@
+## build utils
+debconf-utils                  # debconf utilities                               
+build-essential                # Informational list of build-essential packages      
+manpages-dev                   # Manual pages about using GNU/Linux for development  
+gdb                            # GNU Debugger                                   
+pkg-config                     # manage compile and link flags for libraries    
+libfreetype6-dev               # FreeType 2 font engine, development files
+apt-listchanges                # package change history notification tool   
+binutils                       # GNU assembler, linker and binary utilities
+git                            # fast, scalable, distributed revision control system
+
+

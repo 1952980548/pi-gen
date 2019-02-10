@@ -1,0 +1,5 @@
+## sshd (server)
+openssh-server                 # secure shell (SSH) server, for secure access from remote machines    
+libpam-chksshpwd               # PAM module to enable SSH password checking support      
+ssh-import-id                  # securely retrieve an SSH public key and install it locally   
+

@@ -1,0 +1,5 @@
+libgl1-mesa-dri                # free implementation of the OpenGL API -- DRI modules   
+libgles1-mesa                  # free implementation of the OpenGL|ES 1.x API -- runtime
+libgles2-mesa                  # free implementation of the OpenGL|ES 2.x API -- runtime
+gldriver-test                  # Enable/disable fbturbo when OpenGL driver is used
+
