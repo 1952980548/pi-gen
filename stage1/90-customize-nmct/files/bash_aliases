@@ -1,10 +1,11 @@
-lias ll='ls -AlFh --time-style=+ --color=always'
+alias ll='ls -AlFh --time-style=+ --color=always'
 alias lsalias='cat ~/.bash_aliases'
 alias nocolor='sed "s/\x1B\[[0-9;]\+[A-Za-z]//g"'
 alias nocomment='sed -r "/^\s*((;|\/\/|#|<\!--).*)?$/d;2,$ s/^\[.*\]$/\n&/"'
 alias nolineno='sed "s/^[0-9 ]*//"'
 alias fakeps1='sed "s,^\s*, ${PS1@P},"'
 alias errcho='1>&2 echo'
+alias viss='/usr/share/vim/vim80/macros/less.sh'
 
 alias ltrim='sed "s/^\s*//"'
 alias rtrim='sed "s/\s*$//"'
