@@ -79,13 +79,12 @@ rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img*"
 log "Removing ${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}".*
 rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}".*
 
-ls -l "${DEPLOY_DIR}/"
 log "Deploying ${IMG_FILE} to ${DEPLOY_DIR}"
 ln -s "${IMG_FILE}" "${DEPLOY_DIR}" || log "Symlink deploy failed"
 
 if [ "${COMPRESS_XZ}" == "1" ]; then
-	log "Compressing with pxz..."
-        pxz -vkf -T 8 "$IMG_FILE"
+	log "Compressing ${IMG_FILE} with pxz..."
+        pxz -vkf -T 8 "${IMG_FILE}"
 	ln -s "${IMG_FILE}.xz" "${DEPLOY_DIR}"
 fi
 
