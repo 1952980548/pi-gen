@@ -153,6 +153,7 @@ export SCRIPT_DIR="${BASE_DIR}/scripts"
 export WORK_DIR="${WORK_DIR:-"${BASE_DIR}/work/${IMG_DATE}-${IMG_NAME}"}"
 export DEPLOY_DIR=${DEPLOY_DIR:-"${BASE_DIR}/deploy"}
 export DEPLOY_ZIP="${DEPLOY_ZIP:-1}"
+export COMPRESS_XZ="${COMPRESS_XZ:-1}"
 export LOG_FILE="${WORK_DIR}/build.log"
 
 export RPI_HOSTNAME=${RPI_HOSTNAME:-raspberrypi}

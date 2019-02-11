@@ -74,17 +74,28 @@ zerofree "${ROOT_DEV}"
 unmount_image "${IMG_FILE}"
 
 mkdir -p "${DEPLOY_DIR}"
-
 rm -f "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip"
-rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
+rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img*"
+log "Removing ${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}".*
+rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}".*
+
+ls -l "${DEPLOY_DIR}/"
+log "Deploying ${IMG_FILE} to ${DEPLOY_DIR}"
+ln -s "${IMG_FILE}" "${DEPLOY_DIR}" || log "Symlink deploy failed"
+
+if [ "${COMPRESS_XZ}" == "1" ]; then
+	log "Compressing with pxz..."
+        pxz -vkf -T 8 "$IMG_FILE"
+	ln -s "${IMG_FILE}.xz" "${DEPLOY_DIR}"
+fi
 
 if [ "${DEPLOY_ZIP}" == "1" ]; then
 	pushd "${STAGE_WORK_DIR}" > /dev/null
 	zip "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip" \
 		"$(basename "${IMG_FILE}")"
 	popd > /dev/null
-else
-	cp "$IMG_FILE" "$DEPLOY_DIR"
+#else
+#	cp "$IMG_FILE" "$DEPLOY_DIR"
 fi
 
 cp "$INFO_FILE" "$DEPLOY_DIR"
