@@ -19,6 +19,7 @@ EOF
 			log "Begin ${SUB_STAGE_DIR}/${i}-packages-nr"
 			PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "${i}-packages-nr")"
 			if [ -n "$PACKAGES" ]; then
+				log "To install: ${PACKAGES}"
 				on_chroot << EOF
 apt-get install --no-install-recommends -y $PACKAGES
 EOF
@@ -29,6 +30,7 @@ EOF
 			log "Begin ${SUB_STAGE_DIR}/${i}-packages"
 			PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "${i}-packages")"
 			if [ -n "$PACKAGES" ]; then
+				log "To install: ${PACKAGES}"
 				on_chroot << EOF
 apt-get install -y $PACKAGES
 EOF
@@ -106,8 +108,12 @@ run_stage(){
 			if [ -d "${SUB_STAGE_DIR}" ] &&
 			   [ ! -f "${SUB_STAGE_DIR}/SKIP" ]; then
 				run_sub_stage
+			else
+				log "Skipping ${SUB_STAGE_DIR}..."
 			fi
 		done
+	else
+		log "Skipping ${STAGE}..."
 	fi
 	unmount "${WORK_DIR}/${STAGE}"
 	PREV_STAGE="${STAGE}"
