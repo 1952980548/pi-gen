@@ -2,10 +2,14 @@
 
 IMG_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
+MANIFEST_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.manifest"
 
 on_chroot << EOF
 if [ -x /etc/init.d/fake-hwclock ]; then /etc/init.d/fake-hwclock stop; fi
 EOF
+
+on_chroot <<< "apt list --installed | sed 1d" > "${MANIFEST_FILE}"
+
 echo "Hardlinking..."
 hardlink -t "${ROOTFS_DIR}/usr/share/doc"
 
