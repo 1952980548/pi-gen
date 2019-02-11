@@ -1,7 +1,9 @@
 #!/bin/bash -e
 
-install -v -d					"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d"
-install -v -m 644 files/wait.conf		"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/"
+if [[ "$WAIT_FOR_NETWORK" == 1 ]]; then
+	install -v -d					"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d"
+	install -v -m 644 files/wait.conf		"${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/"
+fi
 
 install -m 644 files/ipv6.conf "${ROOTFS_DIR}/etc/modprobe.d/ipv6.conf"
 

@@ -169,6 +169,7 @@ export TIMEZONE=${TIMEZONE:-Europe/London}
 export WPA_ESSID
 export WPA_PASSWORD
 export WPA_COUNTRY
+export WAIT_FOR_NETWORK="${WAIT_FOR_NETWORK:-0}"
 export ENABLE_SSH="${ENABLE_SSH:-0}"
 
 
