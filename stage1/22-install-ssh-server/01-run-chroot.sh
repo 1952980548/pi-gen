@@ -1,3 +1,4 @@
+#!/bin/bash -e
 if [ "${ENABLE_SSH}" == "1" ]; then
         systemctl enable ssh
 else

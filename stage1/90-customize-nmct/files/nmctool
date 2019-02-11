@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 is_sourced(){ [[ "$0" != "$BASH_SOURCE" ]]; }
 msg(){ echo -e "$@" 1>&2; }
 err(){ msg $'\033[00;31m'"ERROR: $@"$'\033[00m'; }
@@ -86,20 +85,38 @@ mkvenv(){
 declare -fx mkvenv
 
 usage(){
-    echo TBA
+    cat <<-EOF "usage: $0 <command> [<args>]
+
+    Available commands:
+      add-user <name>
+        - add new user account
+      fix-groups [<user>]    
+        - fix group memberships (gpio, i2c, ...) for current or <specified user> 
+      hostname <newname>
+        - change system hostname to <newname>
+      keyboard <layout>
+        - change console keyboard layout. 
+          <layout> is a 2 letter code, e.g. us, gb, be, nl, ... 
+      lazy-sudo[<user>]
+        - add rule to enable sudo without password   
+      timezone <tz>
+        - set timezone to <tz>, e.g. Europe/Brussels
+      new-venv [-s] <name>
+        - make a new Python3 virtual environment in <name> 
+          -s: inherit system-site-packages
+EOF
 }
 
 is_sourced || {
     op="$1"; shift
     case "$op" in 
-        add-user) add_user "$@";;
-        groups) add_default_groups "$@";;
-        sudo) nopasswd_sudo "$@";;
-        keyb|keyboard) set_keyboard "$@";;
-        venv|virtualenv) mkvenv "$@";;
-        hostname) set_hostname "$@";;
-        tmz|timezone) set_timezone "$@";;
+        add-user)      add_user "$@"                ;;
+        fix-groups)    add_default_groups "$@"      ;;
+        hostname)      set_hostname "$@"            ;;
+        keyboard)      set_keyboard "$@"            ;;
+        lazy-sudo)     nopasswd_sudo "$@"           ;;
+        timezone)      set_timezone "$@"            ;;
+        new-venv)      mkvenv "$@"                  ;;
         *) usage;;
     esac
 }
-
