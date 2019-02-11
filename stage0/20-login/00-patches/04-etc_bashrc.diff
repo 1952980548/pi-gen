@@ -1,7 +1,7 @@
-Index: rpi-distro/new/build/stage0/rootfs/etc/bash.bashrc
+Index: stage0/rootfs/etc/bash.bashrc
 ===================================================================
---- pi-gen.orig/build/stage0/rootfs/etc/bash.bashrc
-+++ pi-gen/build/stage0/rootfs/etc/bash.bashrc
+--- stage0.orig/rootfs/etc/bash.bashrc
++++ stage0/rootfs/etc/bash.bashrc
 @@ -29,13 +29,13 @@ PS1='${debian_chroot:+($debian_chroot)}\
  #esac
 
