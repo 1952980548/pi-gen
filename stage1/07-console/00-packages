@@ -1,1 +1,2 @@
 console-setup                  # console font and keymap setup program
+keyboard-configuration         # system-wide keyboard preferences

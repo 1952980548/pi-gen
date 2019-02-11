@@ -4,5 +4,6 @@ if [ "${ENABLE_SSH}" == "1" ]; then
 else
         systemctl disable ssh
 fi
+# in pkg raspberrypi-sys-mods
 systemctl enable regenerate_ssh_host_keys
 
