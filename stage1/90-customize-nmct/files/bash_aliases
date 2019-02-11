@@ -1,0 +1,28 @@
+lias ll='ls -AlFh --time-style=+ --color=always'
+alias lsalias='cat ~/.bash_aliases'
+alias nocolor='sed "s/\x1B\[[0-9;]\+[A-Za-z]//g"'
+alias nocomment='sed -r "/^\s*((;|\/\/|#|<\!--).*)?$/d;2,$ s/^\[.*\]$/\n&/"'
+alias nolineno='sed "s/^[0-9 ]*//"'
+alias fakeps1='sed "s,^\s*, ${PS1@P},"'
+alias errcho='1>&2 echo'
+
+alias ltrim='sed "s/^\s*//"'
+alias rtrim='sed "s/\s*$//"'
+alias trim='sed "s/^\s*//;s/\s*$//"'
+alias right='sed -e :a -e "s/^.\{1,78\}$/ &/;ta"'
+alias center='sed  -e :a -e "s/^.\{1,77\}$/ &/;ta" -e "s/\( *\)\1/\1/"'
+
+alias apt-yes='sudo apt-get install -y'
+alias apt-sim='sudo apt-get install -s'
+alias apt-dir='apt-cache search -n'
+alias pip-get='/usr/bin/env python3 -m pip install --upgrade'
+
+sgr=([bold]="01"     [dim]="02"     [italic]="03"     [underline]="04"
+     [blink]="05"    [reverse]="07" [invisible]="08"  [crossed-out]="09"
+     [black]="30"    [red]="31"     [green]="32"      [blue]="34"
+     [white]="37"    [cyan]="36"    [magenta]="35"    [yellow]="33"    
+); for c in ${!sgr[@]}; do 
+    alias $c='sed '\'"1s/^/\x1b[${sgr[$c]}m/;"'$s/$/\x1b[00m/'\'; done
+
+alias rank='sort | uniq -c | sort -bgr | awk '\''{printf("%3d) %-20s %4dx\n", NR, $2, $1)}'\'
+
