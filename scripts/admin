@@ -1,0 +1,141 @@
+
+setup_env(){
+
+    cd /opt/rpi-distro/pi-gen/
+    export BASE_DIR="$(realpath .)"
+    export ROOTFS_DIR="$(realpath ../new/build/stage4/rootfs)"
+    source scripts/common
+}
+
+chstage(){
+    export ROOTFS_DIR="$(sed -r "s,stage[^/]+/,stage$1/," <<< "${ROOTFS_DIR}")"
+}
+
+
+add_taskdir()
+{
+    # local stagedir="$1"
+    # local taskname="$2"
+    # shift 2;
+    # local taskdir="$1"; shift;
+    local -a files=() dirs=("/") tasks=()
+    local start=10
+    while [[ -n "$@" ]]; do
+        case "$1" in 
+            -d|--debconf)
+                files+=(debconf) ;;
+            -p|--packages)
+                files+=(packages) ;;
+            -n|--packages-no-recommends)
+                files+=(packages-nr) ;;
+            -f|--files)
+                dirs+=(files) ;;
+            -p|--patch)
+                dirs+=(00-patches) ;;
+            -x|--run)
+                files+=(run.sh) ;;            
+            -r|--run-chroot)
+                files+=(run-chroot.sh) ;;
+            -s|--start-at)
+                start="$(( "$2" ))"; shift ;;
+            *)
+                [[ -n "$1" && -d "$(dirname "$1")" ]] && tasks+=("$1") ;;
+                # echo "I don't know what '$1' means, sorry :(" 1>&2; return -2 ;;
+        esac
+        shift
+    done
+    # if [[ -d "$stagedir" ]]; then 
+    #     local taskdir="$(realpath "$stagedir/$(( $start++ ))-$taskname")"
+    # else
+    #     if [[ -n "$BASE_DIR" && -d "$BASE_DIR/$stagedir" ]]; then
+    #         local taskdir="$(realpath "$BASE_DIR/$stagedir/$taskname")"
+    #     else
+    #         echo "Invalid directory: '$stagedir'" 1>&2; return -1
+    #     fi
+    # fi
+
+    for t in ${tasks[@]}; do
+        taskdir="${t%/*}/$(( start++ ))-${t##*/}"
+        mkdir -p ${dirs[@]/#/"${taskdir}"}
+        touch ${files[@]/#/"${taskdir}/00-"}
+        (( ${#tasks[@]} < 3 )) && vi ${files[@]/#/"${taskdir}/00-"}
+        tree "$taskdir"
+    done
+}
+
+chstage ()
+{
+    t="$1";
+    export ROOTFS_DIR="$(sed -r "s,(stage)[^/]+,\1${t}," <<< "${ROOTFS_DIR}")";
+    declare -p ROOTFS_DIR
+}
+findpkg(){
+    local dir="${BASE_DIR:-"${PWD}"}"
+    find "$dir" -type f -name "*packages*" -exec grep -q "$1" "{}" \; -print
+}
+
+find_package_lists(){ 
+    local dir="$(realpath "${1:-"${BASE_DIR:-"${PWD}"}"}")"
+    find "${dir}" -type f -regex ".*packages[^./]*"; 
+}
+
+compact_package_list() {
+    local dir="$(realpath "${SCRIPT_DIR:-"${BASE_DIR:-"${PWD}"}"}")"
+    local script="$(find "$dir" -name remove-comments.sed -print -quit)"
+    if [[ -f "${script}" ]] ; then 
+        # echo "sed script found: $script" 1>&2;
+        sed -f "${script}" "${1:?}"
+    else
+        echo "sed script not found ($script)" 1>&2;
+        return -1
+    fi
+}
+
+
+comment_package_lists() {
+    local pkg_lists="" replace=
+    while [[ -n "$1" ]]; do
+        case "$1" in 
+            -y|--assume-yes) 
+                local replace=Y 
+                ;;
+            -s|--simulate|--dry-run|--assume-no) 
+                local replace=N 
+                ;;
+            -f|--file)
+                pkg_lists+="$2 "; shift
+                ;;
+            -d|--include-dir)
+                pkg_lists+="$(find_package_lists "$2") "; shift
+                ;;
+        esac
+        shift
+    done
+    echo "Replace? -> $replace"
+    [[ -z "$pkg_lists" ]] && pkg_lists="$(find_package_lists)"
+    for list in $pkg_lists; do 
+        if [[ -f "$list" ]]; then
+            echo "In file '$list':"
+            sed -n "/^##/p;1q" "$list" > "$list.new"
+            for pkg in $(compact_package_list "$list"); do
+                desc="$(on_chroot <<< "apt-cache show $pkg" 2>/dev/null | sed -rn "s/^Description(-[a-z]{2})?:/#/p" | sed 1q)"
+                printf "%-30s %s\n" "$pkg" "$desc"
+                # sed -i "s@^$pkg\$@$(printf "%-30s %s\n" "$pkg" "$(sed 's/@/\\@/g' <<< "$desc")")@" "$list"
+                unset desc
+            done | tee -a "$list.new"
+            ans=${replace}
+            [[ -z "$ans" ]] && read -r -p "Replace package list? [Y/n] " ans
+            case "$ans" in 
+                n* | N* ) 
+                    rm -f "$list.new" ;;
+                *)
+                    [[ "$replace" = "Y" ]] && echo "Replacing list..."
+                    mv -f "$list"{.new,}  ;;
+            esac
+            # cat "$list.new"
+            echo ;
+        else
+            echo "File '$list' not found!" 1>&2;
+        fi
+    done
+}
