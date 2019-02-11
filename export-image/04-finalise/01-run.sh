@@ -4,9 +4,10 @@ IMG_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 INFO_FILE="${STAGE_WORK_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.info"
 
 on_chroot << EOF
-/etc/init.d/fake-hwclock stop
-hardlink -t /usr/share/doc
+if [ -x /etc/init.d/fake-hwclock ]; then /etc/init.d/fake-hwclock stop; fi
 EOF
+echo "Hardlinking..."
+hardlink -t "${ROOTFS_DIR}/usr/share/doc"
 
 if [ -d "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config" ]; then
 	chmod 700 "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.config"
@@ -66,7 +67,7 @@ cp "$ROOTFS_DIR/etc/rpi-issue" "$INFO_FILE"
 } >> "$INFO_FILE"
 
 ROOT_DEV="$(mount | grep "${ROOTFS_DIR} " | cut -f1 -d' ')"
-
+echo "Unmounting..."
 unmount "${ROOTFS_DIR}"
 zerofree "${ROOT_DEV}"
 
