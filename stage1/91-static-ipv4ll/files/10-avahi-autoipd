@@ -1,0 +1,47 @@
+#!/bin/sh
+
+avahi_autoipd_ctrl()
+{
+    autoipd_action="$1"
+    if [ "$autoipd_action" = start ]; then autoipd_action="daemonize --wait"; fi
+    if [ -x /usr/sbin/avahi-autoipd ]; then
+ echo "Running '/usr/sbin/avahi-autoipd --$autoipd_action $avahi_autoipd_options $interface 2> /dev/null'"
+        /usr/sbin/avahi-autoipd --$autoipd_action $avahi_autoipd_options $interface #2> /dev/null
+    else
+        echo "No usable avahi-autoipd found" 1>&2
+        false
+    fi
+}
+
+avahi_autoipd_start()
+{
+    if avahi_autoipd_ctrl check; then
+        avahi_autoipd_ctrl refresh
+    else
+        avahi_autoipd_ctrl start
+    fi
+}
+
+avahi_autoipd_stop()
+{
+    if avahi_autoipd_ctrl check; then
+        avahi_autoipd_ctrl kill
+    fi
+}
+
+hook_type="$(basename -s -hook "$hook")"
+if [ -n "$autoipd_start_address" ]; then
+    avahi_autoipd_options="$avahi_autoipd_options -S $autoipd_start_address"
+fi
+
+case "$reason" in
+    PREINIT|CARRIER|EXPIRE|FAIL|TIMEOUT)
+        log "Starting autoipd"
+        avahi_autoipd_start;
+        ;;
+    BOUND|STOP|STOPPED|NOCARRIER|DEPARTED)
+        log "Stopping autoipd"
+        avahi_autoipd_stop
+        ;;
+esac
+

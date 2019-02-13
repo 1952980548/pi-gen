@@ -1,0 +1,23 @@
+#!/bin/sh
+
+log()
+{
+        echo "$(date) $@" | tee -a /tmp/dhcpcd.log
+}
+
+log_event()
+{
+    log "$hook for $reason on $interface"
+}
+
+log_vars()
+{
+    {
+        echo '{'
+        set | sort | sed "/^[A-Z']/d; s/^/  /;"
+        echo " /* interface conf */"
+        ip addr show $interface
+        echo '}'
+        echo
+    } | tee -a /tmp/dhcpcd.log
+}
