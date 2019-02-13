@@ -1,3 +1,6 @@
+#!/bin/bash -e
+
+source "$(dirname $BASH_SOURCE)/common"
 
 setup_env(){
 
@@ -58,6 +61,7 @@ add_taskdir()
         taskdir="${t%/*}/$(( start++ ))-${t##*/}"
         mkdir -p ${dirs[@]/#/"${taskdir}"}
         touch ${files[@]/#/"${taskdir}/00-"}
+        chmod +x "${taskdir}/*.sh"}
         (( ${#tasks[@]} < 3 )) && vi ${files[@]/#/"${taskdir}/00-"}
         tree "$taskdir"
     done
@@ -138,4 +142,18 @@ comment_package_lists() {
             echo "File '$list' not found!" 1>&2;
         fi
     done
+}
+instfiles () 
+{ 
+    dir="${2:?Missing target dir}";
+    mode=${3:-644};
+    [[ "$mode" =~ [\+-]x ]] && mode=755;
+    for p in "${1}"/files/*;
+    do
+        f="$(basename "$p")";
+        s="${1}/00-run.sh";
+        [ -z "$(<"$s")" ] && echo '#!/bin/bash -e' | tee "$s";
+        echo "install -v -m ${mode} files/${f} \"\${ROOTFS_DIR}/${dir}/${f}\"" | tee -a "$s";
+    done;
+    vi "${1}/00-run.sh"
 }

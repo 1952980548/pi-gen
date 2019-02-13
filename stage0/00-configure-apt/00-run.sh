@@ -10,8 +10,10 @@ else
 	rm -f "${ROOTFS_DIR}/etc/apt/apt.conf.d/51cache"
 fi
 install -m 644 files/50raspi            "${ROOTFS_DIR}/etc/apt/apt.conf.d/"
-on_chroot apt-key add - < files/raspberrypi.gpg.key
+install -m 644 files/raspberrypi.gpg.key "${ROOTFS_DIR}/tmp/raspberrypi.gpg.key"
+
 on_chroot << EOF
+apt-key add /tmp/raspberrypi.gpg.key
 apt-get update
 apt-get dist-upgrade -y
 EOF

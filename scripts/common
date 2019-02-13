@@ -1,3 +1,5 @@
+#!/bin/bash -e
+
 log (){
 	date +"[%T] $*" | tee -a "${LOG_FILE}"
 }
@@ -72,12 +74,12 @@ unmount_image(){
 export -f unmount_image
 
 on_chroot() {
-	if [[ -z "${ROOTFS_DIR}" && -d "${1:-.}/rootfs" ]]; then
+	if [[ -d "${1}/rootfs" || -z "${ROOTFS_DIR}" && -d "./rootfs" ]]; then
 		ROOTFS_DIR="${1:-.}/rootfs"
 		[[ -n "${1}" ]] && shift
 	fi
 	if [[ ! -d "${ROOTFS_DIR}" ]]; then 
-		echo "Cannot chroot to '${ROOTFS_DIR}, it is not a directory.'" 1>&2
+		echo "Cannot chroot to '${ROOTFS_DIR}', it is not a directory." 1>&2
 		return -1
 	fi
 	if ! mount | grep -q "$(realpath "${ROOTFS_DIR}"/proc)"; then
@@ -92,7 +94,7 @@ on_chroot() {
 	local BASEDIR="$(dirname "${ROOTFS_DIR}")"
 	local CHROOT_NAME="${IMG_NAME:-pi-gen}:${STAGE:-${BASEDIR##*/}}"
 
-	debian_chroot="${CHROOT_NAME}" capsh --drop=cap_setfcap "--chroot=${ROOTFS_DIR}/" -- -e "$@"
+	debian_chroot="${CHROOT_NAME}" capsh --drop=cap_setfcap "--chroot=${ROOTFS_DIR}/" -- # -e "$@"
 }
 export -f on_chroot
 
