@@ -1,5 +1,32 @@
 #!/bin/bash -e
 # shellcheck disable=SC2119,SC1091
+
+run_sub_stage_new()
+{
+	substagedir="${1}"
+	log "Entering ${substagedir}"
+	pushd "${SUB_STAGE_DIR}" > /dev/null
+	for i in {{00..99}-,}; do
+		debconf="$(sed '/^#/d' ${i}*.debconf)"
+		packages="$(sed '/^#/d' ${i}*.packages)"
+		patches="$(sed '/^#/d' ${i}*.patch)"
+		scripts="$(sed '/^#/d' ${i}*.sh)"
+		chroot_scripts="$(sed '/^#/d' ${i}*.chrsh)"
+
+		if [ -z "${debconf}" ]; then
+			on_chroot <<< "debconf-set-selections <<< ${debconf}"
+		fi
+
+	done
+}
+
+run_stage_new(){
+	log "Begin ${STAGE_DIR}"
+	STAGE="$(basename "${STAGE_DIR}")"
+	pushd "${STAGE_DIR}" > /dev/null
+	unmount "${WORK_DIR}/${STAGE}"
+}
+
 run_sub_stage()
 {
 	log "Begin ${SUB_STAGE_DIR}"
@@ -7,7 +34,7 @@ run_sub_stage()
 	for i in {00..99}; do
 		if [ -f "${i}-debconf" ]; then
 			log "Begin ${SUB_STAGE_DIR}/${i}-debconf"
-			on_chroot << EOF
+			on_chroot  1> "${STAGE_WORK_DIR}/$(basename "$SUB_STAGE_DIR")-${i}-debconf.log" 2> "${STAGE_WORK_DIR}/$(basename "$SUB_STAGE_DIR")-${i}-debconf.err" << EOF
 debconf-set-selections <<SELEOF
 $(cat "${i}-debconf")
 SELEOF
@@ -20,7 +47,7 @@ EOF
 			PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "${i}-packages-nr")"
 			if [ -n "$PACKAGES" ]; then
 				log "To install: ${PACKAGES}"
-				on_chroot << EOF
+				on_chroot 1> "${STAGE_WORK_DIR}/$(basename "$SUB_STAGE_DIR")-${i}-packages-nr.log" 2> "${STAGE_WORK_DIR}/$(basename "$SUB_STAGE_DIR")-${i}-packages-nr.err" << EOF 
 apt-get install --no-install-recommends -y $PACKAGES
 EOF
 			fi
@@ -31,7 +58,7 @@ EOF
 			PACKAGES="$(sed -f "${SCRIPT_DIR}/remove-comments.sed" < "${i}-packages")"
 			if [ -n "$PACKAGES" ]; then
 				log "To install: ${PACKAGES}"
-				on_chroot << EOF
+				on_chroot 1> "${STAGE_WORK_DIR}/$(basename "$SUB_STAGE_DIR")-${i}-packages.log" 2> "${STAGE_WORK_DIR}/$(basename "$SUB_STAGE_DIR")-${i}-packages.err" << EOF 
 apt-get install -y $PACKAGES
 EOF
 			fi
@@ -224,7 +251,7 @@ for EXPORT_DIR in ${EXPORT_DIRS}; do
 	# shellcheck source=/dev/null
 	source "${EXPORT_DIR}/EXPORT_IMAGE"
 	export EXPORT_ROOTFS_DIR=${WORK_DIR}/$(basename "${EXPORT_DIR}")/rootfs
-	echo "Export dir: ${EXPORT_ROOTFS_DIR}"
+	log "Exporting ${EXPORT_ROOTFS_DIR}"
 	run_stage
 	if [ "${USE_QEMU}" != "1" ]; then
 		if [ -e "${EXPORT_DIR}/EXPORT_NOOBS" ]; then

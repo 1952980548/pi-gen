@@ -1,1 +1,6 @@
-mariadb-server nginx-light uwsgi uwsgi-plugin-python3
+mariadb-server                 # MariaDB database server (metapackage depending on the latest version)
+nginx-light                    # nginx web/proxy server (basic version)
+uwsgi                          # fast, self-healing application container server
+uwsgi-plugin-python3           # WSGI plugin for uWSGI (Python 3)
+etckeeper                      # store /etc in git, mercurial, bzr or darcs
+dos2unix                       # convert text file line endings between CRLF and LF

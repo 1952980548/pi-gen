@@ -2,8 +2,10 @@ deploy/*
 work/*
 config
 postrun.sh
-SKIP
+*.SKIP
+*.skip
 SKIP_IMAGES
+SKIP
 .pc
 *-pc
 apt-cacher-ng/

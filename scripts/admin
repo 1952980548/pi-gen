@@ -14,6 +14,101 @@ chstage(){
     export ROOTFS_DIR="$(sed -r "s,stage[^/]+/,stage$1/," <<< "${ROOTFS_DIR}")"
 }
 
+index_tasks()
+{
+shopt -s nullglob;  
+    for s in "${1:-.}"/stage*; do 
+        echo "Stage: $s"; 
+        for t in $s/{00..99}-*; do 
+            echo "  Task: ${t##*/}"; 
+            for f in $f/{00..99}-*; do
+                echo "    File: $f"
+            done
+        done
+    done
+}
+
+get_sources()
+{
+    shopt -s nullglob;  
+    for s in "${1:-.}"/stage*; do 
+        find "$s"
+    done
+        ${s##*/}
+}
+
+dirs_to_yaml_ftw() {
+    shopt -s nullglob;  
+    for s in "${1:-.}"/stage*; do 
+        echo "Stage: $s"; 
+        for t in $s/{00..99}-*; do 
+            echo " - ${t##*/}"; 
+            for p in $t/*-packages-nr; do 
+                echo "   no-rec-install:"; 
+                sed -re '
+                    /^(#.*)?$/ d; 
+                    s/^/     - /;
+                    ' $p; 
+                echo; 
+            done; 
+            for p in $t/*-packages; do 
+                echo "   install:"; 
+                sed -re '
+                    /^(#.*)?$/ d; 
+                    s/^/     - /;
+                    ' $p; 
+                echo; 
+            done; 
+            for d in $t/*-debconf; do 
+                echo "   config:"; 
+                sed -re '
+                    /^(#.*)?$/ d; 
+                    s/^/     - /;
+                    ' $d; 
+                echo; 
+            done; 
+            for q in $t/*-patches; do 
+                echo "   patch:"; 
+                for i in $(< $q/series); do 
+                    sed -re '
+                        /^Index:/ {
+                            s/^.*rootfs/    - /; 
+                            s/$/ |/;
+                            n; 
+                        }; 
+                        /^=+$/ d; 
+                        /^([+-]{3} .*)?$/ d; 
+                        s/^/       /;
+                        ' $q/$i; 
+                    echo; 
+                done; 
+            done; 
+            for p in $t/*-run.sh; do 
+                echo "   execute:"; 
+                sed -re '
+                    /^(#.*)?$/ d; 
+                    s/^/     $ /;
+                    ' $p; 
+                echo; 
+            done; 
+            for p in $t/*-run-chroot.sh; do 
+                echo "   in-chroot:"; 
+                sed -re '
+                    /^(#.*)?$/ d; 
+                    s/^/     $ /;
+                    ' $p; 
+                echo; 
+            done; 
+        done; 
+    done;
+}
+
+prereq_install(){
+    git clone https://github.com/RPi-Distro/pi-gen.git && cd pi-gen
+    sed 's,^.*:,,' depends |  xargs dpkg -l | awk 'NR > 5 && $1 != "ii" {print $2}' | xargs apt-get install -y
+}
+
+
 
 add_taskdir()
 {

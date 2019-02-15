@@ -8,7 +8,7 @@ on_chroot << EOF
 if [ -x /etc/init.d/fake-hwclock ]; then /etc/init.d/fake-hwclock stop; fi
 EOF
 
-on_chroot <<< "apt list --installed | sed 1d" > "${MANIFEST_FILE}"
+on_chroot <<< "apt list --installed | sed 1d" | tee "${MANIFEST_FILE}"
 
 echo "Hardlinking..."
 hardlink -t "${ROOTFS_DIR}/usr/share/doc"
@@ -50,10 +50,7 @@ update_issue "$(basename "${EXPORT_DIR}")"
 install -m 644 "${ROOTFS_DIR}/etc/rpi-issue" "${ROOTFS_DIR}/boot/issue.txt"
 install files/LICENSE.oracle "${ROOTFS_DIR}/boot/"
 
-
 cp "$ROOTFS_DIR/etc/rpi-issue" "$INFO_FILE"
-
-
 {
 	firmware=$(zgrep "firmware as of" \
 		"$ROOTFS_DIR/usr/share/doc/raspberrypi-kernel/changelog.Debian.gz" | \
@@ -78,9 +75,9 @@ zerofree "${ROOT_DEV}"
 unmount_image "${IMG_FILE}"
 
 mkdir -p "${DEPLOY_DIR}"
-rm -f "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip"
-rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img*"
 log "Removing ${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}".*
+# rm -f "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip"
+# rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}.img"
 rm -f "${DEPLOY_DIR}/${IMG_FILENAME}${IMG_SUFFIX}".*
 
 log "Deploying ${IMG_FILE} to ${DEPLOY_DIR}"
@@ -88,7 +85,7 @@ ln -s "${IMG_FILE}" "${DEPLOY_DIR}" || log "Symlink deploy failed"
 
 if [ "${COMPRESS_XZ}" == "1" ]; then
 	log "Compressing ${IMG_FILE} with pxz..."
-        pxz -vkf -T 8 "${IMG_FILE}"
+	pxz -vkf -T 8 "${IMG_FILE}"
 	ln -s "${IMG_FILE}.xz" "${DEPLOY_DIR}"
 fi
 
@@ -97,8 +94,6 @@ if [ "${DEPLOY_ZIP}" == "1" ]; then
 	zip "${DEPLOY_DIR}/${ZIP_FILENAME}${IMG_SUFFIX}.zip" \
 		"$(basename "${IMG_FILE}")"
 	popd > /dev/null
-#else
-#	cp "$IMG_FILE" "$DEPLOY_DIR"
 fi
 
 cp "$INFO_FILE" "$DEPLOY_DIR"

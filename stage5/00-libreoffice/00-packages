@@ -1,3 +1,4 @@
 libreoffice-pi                 # LibreOffice with the GTK theme
 libreoffice-help-en-gb         # office productivity suite -- English_british help
 libreoffice-l10n-en-gb         # office productivity suite -- English_british language package
+libreoffice-help-nl libreoffice-l10n-be
